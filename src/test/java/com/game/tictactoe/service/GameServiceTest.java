@@ -5,17 +5,17 @@ import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class GameServiceTest {
     @Test
     public void shouldPlaceSymbolXOnBoard() {
         GameService gameService = new GameService();
-        gameService.placeSymbol(Symbol.X, 5, 5);
+        gameService.placeSymbol(Symbol.X, 1, 1);
 
         Symbol[][] result = gameService.getBoard();
-        assertEquals(Symbol.X, result[5][5]);
+        assertEquals(Symbol.X, result[1][1]);
     }
 
     @Test
@@ -31,7 +31,7 @@ public class GameServiceTest {
     public void invalidXCoordinateShouldFail() {
         assertThrows(InvalidCoordinateException.class, () -> {
             GameService gameService = new GameService();
-            gameService.placeSymbol(Symbol.X, 13, 5);
+            gameService.placeSymbol(Symbol.X, 13, 1);
         });
     }
 
@@ -39,7 +39,7 @@ public class GameServiceTest {
     public void invalidYCoordinateShouldFail() {
         assertThrows(InvalidCoordinateException.class, () -> {
             GameService gameService = new GameService();
-            gameService.placeSymbol(Symbol.X, 3, 9);
+            gameService.placeSymbol(Symbol.X, 0, 9);
         });
     }
 
@@ -47,8 +47,28 @@ public class GameServiceTest {
     public void shouldNotPlaceSymbolOnAnotherOne() {
         assertThrows(FieldIsAlreadyOccupiedException.class, () -> {
             GameService gameService = new GameService();
-            gameService.placeSymbol(Symbol.X, 5, 5);
-            gameService.placeSymbol(Symbol.X, 5, 5);
+            gameService.placeSymbol(Symbol.X, 1, 1);
+            gameService.placeSymbol(Symbol.X, 1, 1);
         });
+    }
+
+    @Test
+    public void boardShouldNotBeFull() {
+        GameService gameService = new GameService();
+
+        boolean result = gameService.isBoardFull();
+        assertFalse(result);
+    }
+
+    @Test
+    public void boardShouldBeFull() {
+        GameService gameService = new GameService();
+        for (int i = 0; i < BOARD_DIMENSION; i++) {
+            for (int j = 0; j < BOARD_DIMENSION; j++) {
+                gameService.placeSymbol(Symbol.X, i, j);
+            }
+        }
+        boolean result = gameService.isBoardFull();
+        assertTrue(result);
     }
 }

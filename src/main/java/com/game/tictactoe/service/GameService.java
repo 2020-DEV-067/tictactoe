@@ -3,9 +3,11 @@ package com.game.tictactoe.service;
 import com.game.tictactoe.Domain.Symbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
+import org.apache.commons.lang3.ArrayUtils;
+
+import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
 
 public class GameService {
-    private static final int BOARD_DIMENSION = 9;
     private Symbol[][] board = new Symbol[BOARD_DIMENSION][BOARD_DIMENSION];
 
 
@@ -17,6 +19,15 @@ public class GameService {
             throw new FieldIsAlreadyOccupiedException();
         }
         board[x][y] = symbol;
+    }
+
+    public boolean isBoardFull() {
+        for (Symbol[] array : board) {
+            if (ArrayUtils.contains(array, null)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Symbol[][] getBoard() {
