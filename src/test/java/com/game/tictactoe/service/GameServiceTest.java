@@ -1,6 +1,7 @@
 package com.game.tictactoe.service;
 
 import com.game.tictactoe.Domain.Symbol;
+import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import org.junit.jupiter.api.Test;
 
@@ -39,6 +40,15 @@ public class GameServiceTest {
         assertThrows(InvalidCoordinateException.class, () -> {
             GameService gameService = new GameService();
             gameService.placeSymbol(Symbol.X, 3, 9);
+        });
+    }
+
+    @Test
+    public void shouldNotPlaceSymbolOnAnotherOne() {
+        assertThrows(FieldIsAlreadyOccupiedException.class, () -> {
+            GameService gameService = new GameService();
+            gameService.placeSymbol(Symbol.X, 5, 5);
+            gameService.placeSymbol(Symbol.X, 5, 5);
         });
     }
 }
