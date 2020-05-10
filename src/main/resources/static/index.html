@@ -3,8 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Tic Tac Toe</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 <body>
-
+<div id="game-view">
+    <div class="game-view-info">
+        {{message}}
+    </div>
+    <div id="game-view-squares">
+        <div v-for="(square, i) in squares"
+             v-on:click="makeMove(i)"
+             class="game-view-square">
+            {{ square }}
+        </div>
+    </div>
+</div>
+<script src="js/app.js"></script>
 </body>
 </html>
