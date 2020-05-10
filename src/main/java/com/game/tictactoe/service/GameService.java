@@ -12,18 +12,26 @@ public class GameService {
 
 
     public void placeSymbol(Symbol symbol, int x, int y) {
-        if (x >= BOARD_DIMENSION || y >= BOARD_DIMENSION) {
+        if (isPositionInvalid(x, y)) {
             throw new InvalidCoordinateException();
         }
-        if (board[x][y] != null) {
+        if (isFieldOccupied(x, y)) {
             throw new FieldIsAlreadyOccupiedException();
         }
         board[x][y] = symbol;
     }
 
+    private boolean isPositionInvalid(int x, int y) {
+        return x > BOARD_DIMENSION - 1 || y > BOARD_DIMENSION - 1;
+    }
+
+    private boolean isFieldOccupied(int x, int y) {
+        return board[x][y] != null;
+    }
+
     public boolean isBoardFull() {
-        for (Symbol[] array : board) {
-            if (ArrayUtils.contains(array, null)) {
+        for (Symbol[] rows : board) {
+            if (ArrayUtils.contains(rows, null)) {
                 return false;
             }
         }
@@ -47,6 +55,9 @@ public class GameService {
             //anti diagonal check
             if (board[i][BOARD_DIMENSION - i - 1] == symbol) antiDiagonalCounter++;
         }
-        return horizontalCounter == 3 || verticalCounter == 3 || diagonalCounter == 3 || antiDiagonalCounter == 3;
+        return horizontalCounter == BOARD_DIMENSION
+                || verticalCounter == BOARD_DIMENSION
+                || diagonalCounter == BOARD_DIMENSION
+                || antiDiagonalCounter == BOARD_DIMENSION;
     }
 }
