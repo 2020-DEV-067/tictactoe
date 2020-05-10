@@ -4,8 +4,8 @@ import com.game.tictactoe.domain.Board;
 import com.game.tictactoe.domain.GameState;
 import com.game.tictactoe.domain.PlayerSymbol;
 import com.game.tictactoe.domain.Position;
-import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
+import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.stereotype.Service;
@@ -17,13 +17,14 @@ public class GameService {
     @Getter
     @Setter
     private Board board = new Board();
-    private GameState currentState = new GameState();
+    @Getter
+    private GameState currentState = new GameState(board, START_MESSAGE);
     private PlayerSymbol currentPlayerSymbol = PlayerSymbol.X;
     private boolean isGameActive = true;
 
 
     public void playTurn(Position position) {
-        if(isGameActive) {
+        if (isGameActive) {
             addSymbolToBoard(currentPlayerSymbol, position);
             evaluateNewState(currentPlayerSymbol, position);
         }
@@ -94,7 +95,10 @@ public class GameService {
                 || antiDiagonalCounter == BOARD_DIMENSION;
     }
 
-    public GameState getCurrentState() {
-        return currentState;
+    public void restart() {
+        board = new Board();
+        currentState = new GameState(board, START_MESSAGE);
+        currentPlayerSymbol = PlayerSymbol.X;
+        isGameActive = true;
     }
 }

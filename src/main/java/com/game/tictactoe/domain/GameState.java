@@ -3,8 +3,6 @@ package com.game.tictactoe.domain;
 import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
-import static com.game.tictactoe.util.GameConstant.START_MESSAGE;
-
 @Data
 public class GameState {
 
@@ -19,7 +17,5 @@ public class GameState {
     }
 
     public GameState() {
-        this.board = new Board();
-        this.message = START_MESSAGE;
     }
 }

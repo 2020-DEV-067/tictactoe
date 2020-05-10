@@ -277,4 +277,16 @@ public class GameServiceTest {
         Board actualBoard = gameService.getCurrentState().getBoard();
         assertEquals(expectedBoard, actualBoard);
     }
+
+    @Test
+    public void shouldRestartGame() {
+        GameState expectedGameState = new GameState(new Board(), START_MESSAGE);
+        doReturn(true).when(gameService).hasCurrentPlayerWon(any(), any());
+        gameService.playTurn(new Position(1, 1));
+        gameService.playTurn(new Position(0, 0));
+        gameService.restart();
+
+        GameState actualGameState = gameService.getCurrentState();
+        assertEquals(expectedGameState, actualGameState);
+    }
 }

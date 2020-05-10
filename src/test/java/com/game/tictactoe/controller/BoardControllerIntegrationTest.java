@@ -80,4 +80,18 @@ public class BoardControllerIntegrationTest extends JerseyTest {
         String actualMessage = response.readEntity(String.class);
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    public void shouldRestartGame() {
+        GameState expectedState = new GameState(new Board(), START_MESSAGE);
+
+        target(PATH_PLAY_TURN).request(MediaType.APPLICATION_JSON)
+                .post(Entity.entity(new Position(1, 1), MediaType.APPLICATION_JSON));
+        target(PATH_RESTART).request().post(Entity.entity(null, MediaType.APPLICATION_JSON_TYPE));
+        Response response = target(PATH_STATE).request(MediaType.APPLICATION_JSON)
+                .get();
+
+        GameState actualState = response.readEntity(GameState.class);
+        assertEquals(expectedState, actualState);
+    }
 }

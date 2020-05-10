@@ -47,3 +47,7 @@
 
 .game-view-square:nth-child(3n  + 1),
 .game-view-square:nth-child(3n  + 2) { border-right: 15px solid brown }
+
+#restart-button {
+    font-size: 25px;
+}

@@ -36,4 +36,11 @@ public class BoardController {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
+
+    @POST
+    @Path("/restart")
+    public Response restartGame() {
+        gameService.restart();
+        return Response.status(Response.Status.OK).build();
+    }
 }

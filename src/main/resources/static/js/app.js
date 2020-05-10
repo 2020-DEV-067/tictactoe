@@ -24,6 +24,11 @@ var app = new Vue({
             this.squares = board.flat();
             this.message = response.data.message;
         }.bind(this));
+    },
+    restart: function() {
+        axios.post('board/restart').then(function() {
+            this.refreshUI();
+        }.bind(this));
     }
   }
 });
