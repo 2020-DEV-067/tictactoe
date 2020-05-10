@@ -8,10 +8,15 @@ import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+
+import java.util.List;
 
 import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
 import static com.game.tictactoe.util.GameConstant.START_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 public class GameServiceTest {
 
@@ -195,5 +200,24 @@ public class GameServiceTest {
         GameState actualState = gameService.getCurrentState();
 
         assertEquals(expectedState, actualState);
+    }
+
+    @Test
+    public void PlayersShouldAlternate() {
+        Board mockBoard = mock(Board.class);
+        when(mockBoard.getSymbol(any())).thenReturn(null);
+        gameService.setBoard(mockBoard);
+        Position dummyPosition = new Position(1, 1);
+        gameService.playTurn(dummyPosition);
+        gameService.playTurn(dummyPosition);
+        gameService.playTurn(dummyPosition);
+
+        ArgumentCaptor<Symbol> argument = ArgumentCaptor.forClass(Symbol.class);
+        verify(mockBoard, times(3)).addSymbol(argument.capture(), any(Position.class));
+        List<Symbol> values = argument.getAllValues();
+
+        assertEquals(Symbol.X, values.get(0));
+        assertEquals(Symbol.O, values.get(1));
+        assertEquals(Symbol.X, values.get(2));
     }
 }

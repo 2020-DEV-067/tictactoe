@@ -6,13 +6,23 @@ import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.Symbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
+import lombok.Getter;
+import lombok.Setter;
 
 import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
 
 public class GameService {
+    @Getter
+    @Setter
     private Board board = new Board();
     private GameState currentState = new GameState();
+    private Symbol currentSymbol = Symbol.X;
 
+
+    public void playTurn(Position position) {
+        placeSymbol(currentSymbol, position);
+        currentSymbol = getNextSymbol();
+    }
 
     public void placeSymbol(Symbol symbol, Position position) {
         if (isPositionInvalid(position)) {
@@ -32,6 +42,10 @@ public class GameService {
         return board.getSymbol(position) != null;
     }
 
+    private Symbol getNextSymbol() {
+        return currentSymbol == Symbol.X ? Symbol.O : Symbol.X;
+    }
+
     public boolean isBoardFull() {
         for (int i = 0; i < BOARD_DIMENSION; i++) {
             for (int j = 0; j < BOARD_DIMENSION; j++) {
@@ -39,10 +53,6 @@ public class GameService {
             }
         }
         return true;
-    }
-
-    public Board getBoard() {
-        return board;
     }
 
     public boolean hasSymbolWon(Symbol symbol, Position lastPosition) {
