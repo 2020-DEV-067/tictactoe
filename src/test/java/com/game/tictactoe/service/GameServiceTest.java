@@ -68,7 +68,35 @@ public class GameServiceTest {
                 gameService.placeSymbol(Symbol.X, i, j);
             }
         }
+
         boolean result = gameService.isBoardFull();
+        assertTrue(result);
+    }
+
+    @Test
+    public void shouldDetectWinnerHorizontally() {
+        //initial state
+        GameService gameService = new GameService();
+        gameService.placeSymbol(Symbol.X, 0, 0);
+        gameService.placeSymbol(Symbol.X, 1, 0);
+        //last added position
+        gameService.placeSymbol(Symbol.X, 2, 0);
+
+        boolean result = gameService.hasSymbolWon(Symbol.X, 2, 0);
+        assertTrue(result);
+    }
+
+    @Test
+    public void shouldDetectWinnerVertically() {
+        //initial state
+        GameService gameService = new GameService();
+        gameService.placeSymbol(Symbol.X, 1, 0);
+        gameService.placeSymbol(Symbol.X, 1, 1);
+
+        //last added position
+        gameService.placeSymbol(Symbol.X, 1, 2);
+
+        boolean result = gameService.hasSymbolWon(Symbol.X, 1, 2);
         assertTrue(result);
     }
 }

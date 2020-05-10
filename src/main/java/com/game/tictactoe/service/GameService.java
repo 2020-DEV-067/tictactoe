@@ -33,4 +33,20 @@ public class GameService {
     public Symbol[][] getBoard() {
         return board;
     }
+
+    public boolean hasSymbolWon(Symbol symbol, int lastXPosition, int lastYPosition) {
+        int counter = 0;
+        //horizontal scan
+        for (int x = 0; x < BOARD_DIMENSION; x++) {
+            if (board[x][lastYPosition] == symbol) counter++;
+        }
+        if (counter == 3) return true;
+        //reset counter
+        counter = 0;
+        //vertical scan
+        for (int y = 0; y < BOARD_DIMENSION; y++) {
+            if (board[lastXPosition][y] == symbol) counter++;
+        }
+        return counter == 3;
+    }
 }
