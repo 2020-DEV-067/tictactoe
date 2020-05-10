@@ -1,6 +1,7 @@
 package com.game.tictactoe.service;
 
 import com.game.tictactoe.Domain.Board;
+import com.game.tictactoe.Domain.GameState;
 import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.Symbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
@@ -9,6 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
+import static com.game.tictactoe.util.GameConstant.START_MESSAGE;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class GameServiceTest {
@@ -185,5 +187,13 @@ public class GameServiceTest {
 
         boolean result = gameService.hasSymbolWon(Symbol.X, lastPosition);
         assertFalse(result);
+    }
+
+    @Test
+    public void shouldReturnInitialState() {
+        GameState expectedState = new GameState(new Board(), START_MESSAGE);
+        GameState actualState = gameService.getCurrentState();
+
+        assertEquals(expectedState, actualState);
     }
 }

@@ -1,6 +1,7 @@
 package com.game.tictactoe.service;
 
 import com.game.tictactoe.Domain.Board;
+import com.game.tictactoe.Domain.GameState;
 import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.Symbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
@@ -10,6 +11,7 @@ import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
 
 public class GameService {
     private Board board = new Board();
+    private GameState currentState = new GameState();
 
 
     public void placeSymbol(Symbol symbol, Position position) {
@@ -60,5 +62,9 @@ public class GameService {
                 || verticalCounter == BOARD_DIMENSION
                 || diagonalCounter == BOARD_DIMENSION
                 || antiDiagonalCounter == BOARD_DIMENSION;
+    }
+
+    public GameState getCurrentState() {
+        return currentState;
     }
 }
