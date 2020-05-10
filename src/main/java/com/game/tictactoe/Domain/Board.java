@@ -10,29 +10,29 @@ import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
 @Data
 public class Board {
 
-    private Symbol[][] fields;
+    private PlayerSymbol[][] gameField;
 
     public Board() {
-        fields = new Symbol[BOARD_DIMENSION][BOARD_DIMENSION];
+        gameField = new PlayerSymbol[BOARD_DIMENSION][BOARD_DIMENSION];
     }
 
     /**
-     * Adds a new symbol to the board at a provided position
+     * Adds a new player symbol to the board at a provided position
      *
-     * @param symbol
+     * @param playerSymbol
      * @param position
      */
-    public void addSymbol(Symbol symbol, Position position) {
-        fields[position.getX()][position.getY()] = symbol;
+    public void addPlayerSymbol(PlayerSymbol symbol, Position position) {
+        gameField[position.getX()][position.getY()] = symbol;
     }
 
     /**
-     * Retrieves a symbol from the board
+     * Retrieves a player symbol from the board
      *
      * @param position
-     * @return symbol
+     * @return playerSymbol
      */
-    public Symbol getSymbol(Position position) {
-        return fields[position.getX()][position.getY()];
+    public PlayerSymbol getPlayerSymbol(Position position) {
+        return gameField[position.getX()][position.getY()];
     }
 }

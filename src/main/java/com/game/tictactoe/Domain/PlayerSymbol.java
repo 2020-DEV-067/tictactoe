@@ -1,5 +1,5 @@
 package com.game.tictactoe.Domain;
 
-public enum Symbol {
+public enum PlayerSymbol {
     X, O
 }

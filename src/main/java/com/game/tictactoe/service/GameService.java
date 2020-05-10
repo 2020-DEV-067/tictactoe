@@ -3,7 +3,7 @@ package com.game.tictactoe.service;
 import com.game.tictactoe.Domain.Board;
 import com.game.tictactoe.Domain.GameState;
 import com.game.tictactoe.Domain.Position;
-import com.game.tictactoe.Domain.Symbol;
+import com.game.tictactoe.Domain.PlayerSymbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import lombok.Getter;
@@ -17,24 +17,24 @@ public class GameService {
     @Setter
     private Board board = new Board();
     private GameState currentState = new GameState();
-    private Symbol currentSymbol = Symbol.X;
+    private PlayerSymbol currentPlayerSymbol = PlayerSymbol.X;
 
 
     public void playTurn(Position position) {
-        placeSymbol(currentSymbol, position);
-        currentSymbol = getNextSymbol();
-        String message = String.format(NEXT_MESSAGE, currentSymbol);
+        addSymbolToBoard(currentPlayerSymbol, position);
+        currentPlayerSymbol = getNextPlayerSymbol();
+        String message = String.format(NEXT_MESSAGE, currentPlayerSymbol);
         currentState = new GameState(board, message);
     }
 
-    public void placeSymbol(Symbol symbol, Position position) {
+    public void addSymbolToBoard(PlayerSymbol symbol, Position position) {
         if (isPositionInvalid(position)) {
             throw new InvalidCoordinateException();
         }
         if (isFieldOccupied(position)) {
             throw new FieldIsAlreadyOccupiedException();
         }
-        board.addSymbol(symbol, position);
+        board.addPlayerSymbol(symbol, position);
     }
 
     private boolean isPositionInvalid(Position position) {
@@ -42,34 +42,34 @@ public class GameService {
     }
 
     private boolean isFieldOccupied(Position position) {
-        return board.getSymbol(position) != null;
+        return board.getPlayerSymbol(position) != null;
     }
 
-    private Symbol getNextSymbol() {
-        return currentSymbol == Symbol.X ? Symbol.O : Symbol.X;
+    private PlayerSymbol getNextPlayerSymbol() {
+        return currentPlayerSymbol == PlayerSymbol.X ? PlayerSymbol.O : PlayerSymbol.X;
     }
 
     public boolean isBoardFull() {
         for (int i = 0; i < BOARD_DIMENSION; i++) {
             for (int j = 0; j < BOARD_DIMENSION; j++) {
-                if (board.getSymbol(new Position(i, j)) == null) return false;
+                if (board.getPlayerSymbol(new Position(i, j)) == null) return false;
             }
         }
         return true;
     }
 
-    public boolean hasSymbolWon(Symbol symbol, Position lastPosition) {
+    public boolean hasPlayerSymbolWon(PlayerSymbol symbol, Position lastPosition) {
         int horizontalCounter = 0, verticalCounter = 0, diagonalCounter = 0, antiDiagonalCounter = 0;
 
         for (int i = 0; i < BOARD_DIMENSION; i++) {
             //horizontal check
-            if (board.getSymbol(new Position(i, lastPosition.getY())) == symbol) horizontalCounter++;
+            if (board.getPlayerSymbol(new Position(i, lastPosition.getY())) == symbol) horizontalCounter++;
             //vertical check
-            if (board.getSymbol(new Position(lastPosition.getX(), i)) == symbol) verticalCounter++;
+            if (board.getPlayerSymbol(new Position(lastPosition.getX(), i)) == symbol) verticalCounter++;
             //diagonal check
-            if (board.getSymbol(new Position(i, i)) == symbol) diagonalCounter++;
+            if (board.getPlayerSymbol(new Position(i, i)) == symbol) diagonalCounter++;
             //anti diagonal check
-            if (board.getSymbol(new Position(i, BOARD_DIMENSION - i - 1)) == symbol) antiDiagonalCounter++;
+            if (board.getPlayerSymbol(new Position(i, BOARD_DIMENSION - i - 1)) == symbol) antiDiagonalCounter++;
         }
         return horizontalCounter == BOARD_DIMENSION
                 || verticalCounter == BOARD_DIMENSION
