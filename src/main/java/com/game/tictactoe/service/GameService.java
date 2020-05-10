@@ -35,18 +35,18 @@ public class GameService {
     }
 
     public boolean hasSymbolWon(Symbol symbol, int lastXPosition, int lastYPosition) {
-        int counter = 0;
-        //horizontal scan
-        for (int x = 0; x < BOARD_DIMENSION; x++) {
-            if (board[x][lastYPosition] == symbol) counter++;
+        int horizontalCounter = 0, verticalCounter = 0, diagonalCounter = 0, antiDiagonalCounter = 0;
+
+        for (int i = 0; i < BOARD_DIMENSION; i++) {
+            //horizontal check
+            if (board[i][lastYPosition] == symbol) horizontalCounter++;
+            //vertical check
+            if (board[lastXPosition][i] == symbol) verticalCounter++;
+            //diagonal check
+            if (board[i][i] == symbol) diagonalCounter++;
+            //anti diagonal check
+            if (board[i][BOARD_DIMENSION - i - 1] == symbol) antiDiagonalCounter++;
         }
-        if (counter == 3) return true;
-        //reset counter
-        counter = 0;
-        //vertical scan
-        for (int y = 0; y < BOARD_DIMENSION; y++) {
-            if (board[lastXPosition][y] == symbol) counter++;
-        }
-        return counter == 3;
+        return horizontalCounter == 3 || verticalCounter == 3 || diagonalCounter == 3 || antiDiagonalCounter == 3;
     }
 }

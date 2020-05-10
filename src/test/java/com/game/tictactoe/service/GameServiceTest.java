@@ -126,4 +126,58 @@ public class GameServiceTest {
         boolean result = gameService.hasSymbolWon(Symbol.X, 1, 2);
         assertFalse(result);
     }
+
+    @Test
+    public void shouldDetectWinnerDiagonally() {
+        //initial state
+        GameService gameService = new GameService();
+        gameService.placeSymbol(Symbol.X, 0, 0);
+        gameService.placeSymbol(Symbol.X, 1, 1);
+
+        //last added position
+        gameService.placeSymbol(Symbol.X, 2, 2);
+
+        boolean result = gameService.hasSymbolWon(Symbol.X, 2, 2);
+        assertTrue(result);
+    }
+
+    @Test
+    public void shouldNotDetectWinnerDiagonally() {
+        //initial state
+        GameService gameService = new GameService();
+        gameService.placeSymbol(Symbol.X, 0, 0);
+
+        //last added position
+        gameService.placeSymbol(Symbol.X, 2, 2);
+
+        boolean result = gameService.hasSymbolWon(Symbol.X, 2, 2);
+        assertFalse(result);
+    }
+
+    @Test
+    public void shouldDetectWinnerAntiDiagonally() {
+        //initial state
+        GameService gameService = new GameService();
+        gameService.placeSymbol(Symbol.X, 0, 2);
+        gameService.placeSymbol(Symbol.X, 1, 1);
+
+        //last added position
+        gameService.placeSymbol(Symbol.X, 2, 0);
+
+        boolean result = gameService.hasSymbolWon(Symbol.X, 2, 0);
+        assertTrue(result);
+    }
+
+    @Test
+    public void shouldNotDetectWinnerAntiDiagonally() {
+        //initial state
+        GameService gameService = new GameService();
+        gameService.placeSymbol(Symbol.X, 0, 2);
+
+        //last added position
+        gameService.placeSymbol(Symbol.X, 1, 1);
+
+        boolean result = gameService.hasSymbolWon(Symbol.X, 1, 1);
+        assertFalse(result);
+    }
 }
