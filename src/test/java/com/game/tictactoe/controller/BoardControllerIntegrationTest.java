@@ -1,9 +1,9 @@
 package com.game.tictactoe.controller;
 
-import com.game.tictactoe.Domain.Board;
-import com.game.tictactoe.Domain.GameState;
-import com.game.tictactoe.Domain.PlayerSymbol;
-import com.game.tictactoe.Domain.Position;
+import com.game.tictactoe.domain.Board;
+import com.game.tictactoe.domain.GameState;
+import com.game.tictactoe.domain.PlayerSymbol;
+import com.game.tictactoe.domain.Position;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.test.JerseyTest;
 import org.junit.Test;

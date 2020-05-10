@@ -1,4 +1,4 @@
-package com.game.tictactoe.Domain;
+package com.game.tictactoe.domain;
 
 import lombok.Data;
 
@@ -19,7 +19,7 @@ public class Board {
     /**
      * Adds a new player symbol to the board at a provided position
      *
-     * @param playerSymbol
+     * @param symbol
      * @param position
      */
     public void addPlayerSymbol(PlayerSymbol symbol, Position position) {

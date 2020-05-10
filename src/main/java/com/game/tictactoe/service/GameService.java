@@ -1,9 +1,9 @@
 package com.game.tictactoe.service;
 
-import com.game.tictactoe.Domain.Board;
-import com.game.tictactoe.Domain.GameState;
-import com.game.tictactoe.Domain.PlayerSymbol;
-import com.game.tictactoe.Domain.Position;
+import com.game.tictactoe.domain.Board;
+import com.game.tictactoe.domain.GameState;
+import com.game.tictactoe.domain.PlayerSymbol;
+import com.game.tictactoe.domain.Position;
 import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import lombok.Getter;

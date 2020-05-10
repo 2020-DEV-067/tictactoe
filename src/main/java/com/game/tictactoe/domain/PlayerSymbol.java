@@ -1,4 +1,4 @@
-package com.game.tictactoe.Domain;
+package com.game.tictactoe.domain;
 
 public enum PlayerSymbol {
     X, O

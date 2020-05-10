@@ -1,7 +1,7 @@
 package com.game.tictactoe.controller;
 
-import com.game.tictactoe.Domain.GameState;
-import com.game.tictactoe.Domain.Position;
+import com.game.tictactoe.domain.GameState;
+import com.game.tictactoe.domain.Position;
 import com.game.tictactoe.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
