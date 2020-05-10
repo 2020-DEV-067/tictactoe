@@ -19,18 +19,23 @@ public class GameService {
     private Board board = new Board();
     private GameState currentState = new GameState();
     private PlayerSymbol currentPlayerSymbol = PlayerSymbol.X;
+    private boolean isGameActive = true;
 
 
     public void playTurn(Position position) {
-        addSymbolToBoard(currentPlayerSymbol, position);
-        evaluateNewState(currentPlayerSymbol, position);
+        if(isGameActive) {
+            addSymbolToBoard(currentPlayerSymbol, position);
+            evaluateNewState(currentPlayerSymbol, position);
+        }
     }
 
     private void evaluateNewState(PlayerSymbol playerSymbol, Position position) {
         String message;
         if (hasCurrentPlayerWon(playerSymbol, position)) {
+            isGameActive = false;
             message = String.format(WIN_MESSAGE, playerSymbol);
         } else if (isBoardFull()) {
+            isGameActive = false;
             message = DRAW_MESSAGE;
         } else {
             currentPlayerSymbol = getNextPlayerSymbol();

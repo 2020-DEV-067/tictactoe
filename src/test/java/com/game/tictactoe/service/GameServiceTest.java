@@ -251,4 +251,30 @@ public class GameServiceTest {
         String actualMessage = gameService.getCurrentState().getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    public void shouldIgnoreTurnAfterDrawn() {
+        Board expectedBoard = new Board();
+        expectedBoard.addPlayerSymbol(PlayerSymbol.X, new Position(1, 1));
+        doReturn(true).when(gameService).isBoardFull();
+        gameService.playTurn(new Position(1, 1));
+        //last turn should be ignored
+        gameService.playTurn(new Position(0, 0));
+
+        Board actualBoard = gameService.getCurrentState().getBoard();
+        assertEquals(expectedBoard, actualBoard);
+    }
+
+    @Test
+    public void shouldIgnoreTurnAfterWinning() {
+        Board expectedBoard = new Board();
+        expectedBoard.addPlayerSymbol(PlayerSymbol.X, new Position(1, 1));
+        doReturn(true).when(gameService).hasCurrentPlayerWon(any(), any());
+        gameService.playTurn(new Position(1, 1));
+        //last turn should be ignored
+        gameService.playTurn(new Position(0, 0));
+
+        Board actualBoard = gameService.getCurrentState().getBoard();
+        assertEquals(expectedBoard, actualBoard);
+    }
 }
