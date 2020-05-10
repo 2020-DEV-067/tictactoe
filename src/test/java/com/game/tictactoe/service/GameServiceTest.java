@@ -62,6 +62,7 @@ public class GameServiceTest {
     public void shouldNotPlaceSymbolOnAnotherOne() {
         assertThrows(PositionIsAlreadyOccupiedException.class, () -> {
             Position dummyPosition = new Position(1, 1);
+
             gameService.addSymbolToBoard(PlayerSymbol.X, dummyPosition);
             gameService.addSymbolToBoard(PlayerSymbol.X, dummyPosition);
         });
@@ -90,6 +91,7 @@ public class GameServiceTest {
         //initial state
         gameService.addSymbolToBoard(PlayerSymbol.X, new Position(0, 0));
         gameService.addSymbolToBoard(PlayerSymbol.X, new Position(1, 0));
+
         //last added position
         Position lastPosition = new Position(2, 0);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
@@ -103,6 +105,7 @@ public class GameServiceTest {
         //initial state
         gameService.addSymbolToBoard(PlayerSymbol.X, new Position(0, 0));
         gameService.addSymbolToBoard(PlayerSymbol.O, new Position(1, 0));
+
         //last added position
         Position lastPosition = new Position(2, 0);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
@@ -207,10 +210,10 @@ public class GameServiceTest {
         when(mockBoard.getPlayerSymbol(any())).thenReturn(null);
         gameService.setBoard(mockBoard);
         Position dummyPosition = new Position(1, 1);
-        gameService.playTurn(dummyPosition);
-        gameService.playTurn(dummyPosition);
-        gameService.playTurn(dummyPosition);
 
+        gameService.playTurn(dummyPosition);
+        gameService.playTurn(dummyPosition);
+        gameService.playTurn(dummyPosition);
         ArgumentCaptor<PlayerSymbol> argument = ArgumentCaptor.forClass(PlayerSymbol.class);
         verify(mockBoard, times(3)).addPlayerSymbol(argument.capture(), any(Position.class));
         List<PlayerSymbol> values = argument.getAllValues();
@@ -224,6 +227,7 @@ public class GameServiceTest {
     public void shouldReturnNextPlayerMessage() {
         String expectedMessage = String.format(NEXT_MESSAGE, PlayerSymbol.O);
         Position dummyPosition = new Position(1, 1);
+
         gameService.playTurn(dummyPosition);
 
         String actualMessage = gameService.getCurrentState().getMessage();
@@ -235,6 +239,7 @@ public class GameServiceTest {
         doReturn(true).when(gameService).hasCurrentPlayerWon(any(), any());
         String expectedMessage = String.format(WIN_MESSAGE, PlayerSymbol.X);
         Position dummyPosition = new Position(1, 1);
+
         gameService.playTurn(dummyPosition);
 
         String actualMessage = gameService.getCurrentState().getMessage();
@@ -246,6 +251,7 @@ public class GameServiceTest {
         doReturn(true).when(gameService).isBoardFull();
         String expectedMessage = DRAW_MESSAGE;
         Position dummyPosition = new Position(1, 1);
+
         gameService.playTurn(dummyPosition);
 
         String actualMessage = gameService.getCurrentState().getMessage();
@@ -257,6 +263,7 @@ public class GameServiceTest {
         Board expectedBoard = new Board();
         expectedBoard.addPlayerSymbol(PlayerSymbol.X, new Position(1, 1));
         doReturn(true).when(gameService).isBoardFull();
+
         gameService.playTurn(new Position(1, 1));
         //last turn should be ignored
         gameService.playTurn(new Position(0, 0));
@@ -270,6 +277,7 @@ public class GameServiceTest {
         Board expectedBoard = new Board();
         expectedBoard.addPlayerSymbol(PlayerSymbol.X, new Position(1, 1));
         doReturn(true).when(gameService).hasCurrentPlayerWon(any(), any());
+
         gameService.playTurn(new Position(1, 1));
         //last turn should be ignored
         gameService.playTurn(new Position(0, 0));
@@ -282,6 +290,7 @@ public class GameServiceTest {
     public void shouldRestartGame() {
         GameState expectedGameState = new GameState(new Board(), START_MESSAGE);
         doReturn(true).when(gameService).hasCurrentPlayerWon(any(), any());
+
         gameService.playTurn(new Position(1, 1));
         gameService.playTurn(new Position(0, 0));
         gameService.restart();

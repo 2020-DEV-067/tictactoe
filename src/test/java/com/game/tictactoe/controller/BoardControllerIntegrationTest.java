@@ -32,6 +32,7 @@ public class BoardControllerIntegrationTest extends JerseyTest {
         Board board = new Board();
         String message = START_MESSAGE;
         GameState expectedState = new GameState(board, message);
+
         Response response = target(PATH_STATE).request(MediaType.APPLICATION_JSON)
                 .get();
 
@@ -60,6 +61,7 @@ public class BoardControllerIntegrationTest extends JerseyTest {
     public void shouldReturnInvalidPositionMessage() {
         String expectedMessage = INVALID_POSITION;
         Position position = new Position(5, 5);
+
         Response response = target(PATH_PLAY_TURN).request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(position, MediaType.APPLICATION_JSON));
 
@@ -71,6 +73,7 @@ public class BoardControllerIntegrationTest extends JerseyTest {
     public void shouldReturnPositionOccupiedMessage() {
         String expectedMessage = POSITION_IS_TAKEN;
         Position position = new Position(0, 0);
+
         target(PATH_PLAY_TURN).request(MediaType.APPLICATION_JSON)
                 .post(Entity.entity(position, MediaType.APPLICATION_JSON));
         //try with the same position again
