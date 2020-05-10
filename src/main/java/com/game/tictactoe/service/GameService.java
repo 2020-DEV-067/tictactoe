@@ -4,7 +4,7 @@ import com.game.tictactoe.Domain.Board;
 import com.game.tictactoe.Domain.GameState;
 import com.game.tictactoe.Domain.PlayerSymbol;
 import com.game.tictactoe.Domain.Position;
-import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
+import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import lombok.Getter;
 import lombok.Setter;
@@ -44,7 +44,7 @@ public class GameService {
             throw new InvalidCoordinateException();
         }
         if (isFieldOccupied(position)) {
-            throw new FieldIsAlreadyOccupiedException();
+            throw new PositionIsAlreadyOccupiedException();
         }
         board.addPlayerSymbol(symbol, position);
     }

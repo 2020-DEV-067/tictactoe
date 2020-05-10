@@ -4,7 +4,7 @@ import com.game.tictactoe.Domain.Board;
 import com.game.tictactoe.Domain.GameState;
 import com.game.tictactoe.Domain.PlayerSymbol;
 import com.game.tictactoe.Domain.Position;
-import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
+import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ public class GameServiceTest {
 
     @Test
     public void shouldNotPlaceSymbolOnAnotherOne() {
-        assertThrows(FieldIsAlreadyOccupiedException.class, () -> {
+        assertThrows(PositionIsAlreadyOccupiedException.class, () -> {
             Position dummyPosition = new Position(1, 1);
             gameService.addSymbolToBoard(PlayerSymbol.X, dummyPosition);
             gameService.addSymbolToBoard(PlayerSymbol.X, dummyPosition);
