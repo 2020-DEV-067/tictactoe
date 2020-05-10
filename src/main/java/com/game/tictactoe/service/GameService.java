@@ -1,5 +1,6 @@
 package com.game.tictactoe.service;
 
+import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.Symbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
@@ -11,22 +12,22 @@ public class GameService {
     private Symbol[][] board = new Symbol[BOARD_DIMENSION][BOARD_DIMENSION];
 
 
-    public void placeSymbol(Symbol symbol, int x, int y) {
-        if (isPositionInvalid(x, y)) {
+    public void placeSymbol(Symbol symbol, Position position) {
+        if (isPositionInvalid(position)) {
             throw new InvalidCoordinateException();
         }
-        if (isFieldOccupied(x, y)) {
+        if (isFieldOccupied(position)) {
             throw new FieldIsAlreadyOccupiedException();
         }
-        board[x][y] = symbol;
+        board[position.getX()][position.getY()] = symbol;
     }
 
-    private boolean isPositionInvalid(int x, int y) {
-        return x > BOARD_DIMENSION - 1 || y > BOARD_DIMENSION - 1;
+    private boolean isPositionInvalid(Position position) {
+        return position.getX() > BOARD_DIMENSION - 1 || position.getY() > BOARD_DIMENSION - 1;
     }
 
-    private boolean isFieldOccupied(int x, int y) {
-        return board[x][y] != null;
+    private boolean isFieldOccupied(Position position) {
+        return board[position.getX()][position.getY()] != null;
     }
 
     public boolean isBoardFull() {
@@ -42,14 +43,14 @@ public class GameService {
         return board;
     }
 
-    public boolean hasSymbolWon(Symbol symbol, int lastXPosition, int lastYPosition) {
+    public boolean hasSymbolWon(Symbol symbol, Position lastPosition) {
         int horizontalCounter = 0, verticalCounter = 0, diagonalCounter = 0, antiDiagonalCounter = 0;
 
         for (int i = 0; i < BOARD_DIMENSION; i++) {
             //horizontal check
-            if (board[i][lastYPosition] == symbol) horizontalCounter++;
+            if (board[i][lastPosition.getY()] == symbol) horizontalCounter++;
             //vertical check
-            if (board[lastXPosition][i] == symbol) verticalCounter++;
+            if (board[lastPosition.getX()][i] == symbol) verticalCounter++;
             //diagonal check
             if (board[i][i] == symbol) diagonalCounter++;
             //anti diagonal check
