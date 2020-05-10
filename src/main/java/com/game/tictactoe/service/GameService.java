@@ -8,9 +8,11 @@ import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.stereotype.Service;
 
 import static com.game.tictactoe.util.GameConstant.*;
 
+@Service
 public class GameService {
     @Getter
     @Setter
