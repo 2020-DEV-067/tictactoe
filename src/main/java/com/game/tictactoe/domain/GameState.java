@@ -1,5 +1,6 @@
 package com.game.tictactoe.domain;
 
+import com.fasterxml.jackson.annotation.JsonUnwrapped;
 import lombok.Data;
 
 import static com.game.tictactoe.util.GameConstant.START_MESSAGE;
@@ -7,6 +8,7 @@ import static com.game.tictactoe.util.GameConstant.START_MESSAGE;
 @Data
 public class GameState {
 
+    @JsonUnwrapped
     private Board board;
 
     private String message;
