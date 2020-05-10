@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
+import static com.game.tictactoe.util.GameConstant.NEXT_MESSAGE;
 
 public class GameService {
     @Getter
@@ -22,6 +23,8 @@ public class GameService {
     public void playTurn(Position position) {
         placeSymbol(currentSymbol, position);
         currentSymbol = getNextSymbol();
+        String message = String.format(NEXT_MESSAGE, currentSymbol);
+        currentState = new GameState(board, message);
     }
 
     public void placeSymbol(Symbol symbol, Position position) {

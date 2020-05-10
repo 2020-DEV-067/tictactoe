@@ -12,8 +12,7 @@ import org.mockito.ArgumentCaptor;
 
 import java.util.List;
 
-import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
-import static com.game.tictactoe.util.GameConstant.START_MESSAGE;
+import static com.game.tictactoe.util.GameConstant.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
@@ -203,7 +202,7 @@ public class GameServiceTest {
     }
 
     @Test
-    public void PlayersShouldAlternate() {
+    public void playersShouldAlternate() {
         Board mockBoard = mock(Board.class);
         when(mockBoard.getSymbol(any())).thenReturn(null);
         gameService.setBoard(mockBoard);
@@ -219,5 +218,15 @@ public class GameServiceTest {
         assertEquals(Symbol.X, values.get(0));
         assertEquals(Symbol.O, values.get(1));
         assertEquals(Symbol.X, values.get(2));
+    }
+
+    @Test
+    public void shouldReturnNextPlayerMessage() {
+        String expectedMessage = String.format(NEXT_MESSAGE, Symbol.O);
+        Position dummyPosition = new Position(1, 1);
+        gameService.playTurn(dummyPosition);
+
+        String actualMessage = gameService.getCurrentState().getMessage();
+        assertEquals(expectedMessage, actualMessage);
     }
 }
