@@ -240,4 +240,15 @@ public class GameServiceTest {
         String actualMessage = gameService.getCurrentState().getMessage();
         assertEquals(expectedMessage, actualMessage);
     }
+
+    @Test
+    public void shouldReturnDrawMessage() {
+        doReturn(true).when(gameService).isBoardFull();
+        String expectedMessage = DRAW_MESSAGE;
+        Position dummyPosition = new Position(1, 1);
+        gameService.playTurn(dummyPosition);
+
+        String actualMessage = gameService.getCurrentState().getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
 }

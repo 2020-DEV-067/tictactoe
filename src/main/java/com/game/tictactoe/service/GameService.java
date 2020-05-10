@@ -28,6 +28,8 @@ public class GameService {
         String message;
         if (hasCurrentPlayerWon(playerSymbol, position)) {
             message = String.format(WIN_MESSAGE, playerSymbol);
+        } else if (isBoardFull()) {
+            message = DRAW_MESSAGE;
         } else {
             currentPlayerSymbol = getNextPlayerSymbol();
             message = String.format(NEXT_MESSAGE, currentPlayerSymbol);
