@@ -2,8 +2,8 @@ package com.game.tictactoe.service;
 
 import com.game.tictactoe.Domain.Board;
 import com.game.tictactoe.Domain.GameState;
-import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.PlayerSymbol;
+import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,7 +23,7 @@ public class GameServiceTest {
 
     @BeforeEach
     public void init() {
-        gameService = new GameService();
+        gameService = spy(GameService.class);
     }
 
     @Test
@@ -94,7 +94,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(2, 0);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertTrue(result);
     }
 
@@ -107,7 +107,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(2, 0);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertFalse(result);
     }
 
@@ -121,7 +121,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(1, 2);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertTrue(result);
     }
 
@@ -135,7 +135,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(1, 2);
         gameService.addSymbolToBoard(PlayerSymbol.O, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertFalse(result);
     }
 
@@ -149,7 +149,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(2, 2);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertTrue(result);
     }
 
@@ -162,7 +162,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(2, 2);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertFalse(result);
     }
 
@@ -176,7 +176,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(2, 0);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertTrue(result);
     }
 
@@ -189,7 +189,7 @@ public class GameServiceTest {
         Position lastPosition = new Position(1, 1);
         gameService.addSymbolToBoard(PlayerSymbol.X, lastPosition);
 
-        boolean result = gameService.hasPlayerSymbolWon(PlayerSymbol.X, lastPosition);
+        boolean result = gameService.hasCurrentPlayerWon(PlayerSymbol.X, lastPosition);
         assertFalse(result);
     }
 
@@ -223,6 +223,17 @@ public class GameServiceTest {
     @Test
     public void shouldReturnNextPlayerMessage() {
         String expectedMessage = String.format(NEXT_MESSAGE, PlayerSymbol.O);
+        Position dummyPosition = new Position(1, 1);
+        gameService.playTurn(dummyPosition);
+
+        String actualMessage = gameService.getCurrentState().getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    public void shouldReturnWinnerMessage() {
+        doReturn(true).when(gameService).hasCurrentPlayerWon(any(), any());
+        String expectedMessage = String.format(WIN_MESSAGE, PlayerSymbol.X);
         Position dummyPosition = new Position(1, 1);
         gameService.playTurn(dummyPosition);
 

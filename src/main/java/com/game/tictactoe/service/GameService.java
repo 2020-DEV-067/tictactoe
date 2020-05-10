@@ -2,15 +2,14 @@ package com.game.tictactoe.service;
 
 import com.game.tictactoe.Domain.Board;
 import com.game.tictactoe.Domain.GameState;
-import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.PlayerSymbol;
+import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
 import com.game.tictactoe.service.exception.InvalidCoordinateException;
 import lombok.Getter;
 import lombok.Setter;
 
-import static com.game.tictactoe.util.GameConstant.BOARD_DIMENSION;
-import static com.game.tictactoe.util.GameConstant.NEXT_MESSAGE;
+import static com.game.tictactoe.util.GameConstant.*;
 
 public class GameService {
     @Getter
@@ -22,8 +21,17 @@ public class GameService {
 
     public void playTurn(Position position) {
         addSymbolToBoard(currentPlayerSymbol, position);
-        currentPlayerSymbol = getNextPlayerSymbol();
-        String message = String.format(NEXT_MESSAGE, currentPlayerSymbol);
+        evaluateNewState(currentPlayerSymbol, position);
+    }
+
+    private void evaluateNewState(PlayerSymbol playerSymbol, Position position) {
+        String message;
+        if (hasCurrentPlayerWon(playerSymbol, position)) {
+            message = String.format(WIN_MESSAGE, playerSymbol);
+        } else {
+            currentPlayerSymbol = getNextPlayerSymbol();
+            message = String.format(NEXT_MESSAGE, currentPlayerSymbol);
+        }
         currentState = new GameState(board, message);
     }
 
@@ -58,7 +66,7 @@ public class GameService {
         return true;
     }
 
-    public boolean hasPlayerSymbolWon(PlayerSymbol symbol, Position lastPosition) {
+    public boolean hasCurrentPlayerWon(PlayerSymbol symbol, Position lastPosition) {
         int horizontalCounter = 0, verticalCounter = 0, diagonalCounter = 0, antiDiagonalCounter = 0;
 
         for (int i = 0; i < BOARD_DIMENSION; i++) {
