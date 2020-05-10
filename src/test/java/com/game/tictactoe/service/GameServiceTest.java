@@ -1,5 +1,6 @@
 package com.game.tictactoe.service;
 
+import com.game.tictactoe.Domain.Board;
 import com.game.tictactoe.Domain.Position;
 import com.game.tictactoe.Domain.Symbol;
 import com.game.tictactoe.service.exception.FieldIsAlreadyOccupiedException;
@@ -21,18 +22,20 @@ public class GameServiceTest {
 
     @Test
     public void shouldPlaceSymbolXOnBoard() {
-        gameService.placeSymbol(Symbol.X, new Position(1, 1));
+        Position dummyPosition = new Position(1, 1);
+        gameService.placeSymbol(Symbol.X, dummyPosition);
 
-        Symbol[][] result = gameService.getBoard();
-        assertEquals(Symbol.X, result[1][1]);
+        Board result = gameService.getBoard();
+        assertEquals(Symbol.X, result.getSymbol(dummyPosition));
     }
 
     @Test
     public void shouldPlaceSymbolOOnBoard() {
-        gameService.placeSymbol(Symbol.X, new Position(2, 2));
+        Position dummyPosition = new Position(2, 2);
+        gameService.placeSymbol(Symbol.X, dummyPosition);
 
-        Symbol[][] result = gameService.getBoard();
-        assertEquals(Symbol.X, result[2][2]);
+        Board result = gameService.getBoard();
+        assertEquals(Symbol.X, result.getSymbol(dummyPosition));
     }
 
     @Test
