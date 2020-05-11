@@ -3,6 +3,8 @@ package com.game.tictactoe.controller;
 import com.game.tictactoe.domain.GameState;
 import com.game.tictactoe.domain.Position;
 import com.game.tictactoe.service.GameService;
+import com.game.tictactoe.service.exception.InvalidPositionException;
+import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -32,7 +34,7 @@ public class BoardController {
         try {
             gameService.playTurn(nextPosition);
             return Response.status(Response.Status.OK).build();
-        } catch (Exception e) {
+        } catch (InvalidPositionException | PositionIsAlreadyOccupiedException e) {
             return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
         }
     }
