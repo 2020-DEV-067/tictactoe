@@ -5,7 +5,7 @@ import com.game.tictactoe.domain.GameState;
 import com.game.tictactoe.domain.PlayerSymbol;
 import com.game.tictactoe.domain.Position;
 import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
-import com.game.tictactoe.service.exception.InvalidCoordinateException;
+import com.game.tictactoe.service.exception.InvalidPositionException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
@@ -46,14 +46,14 @@ public class GameServiceTest {
 
     @Test
     public void invalidXCoordinateShouldFail() {
-        assertThrows(InvalidCoordinateException.class, () -> {
+        assertThrows(InvalidPositionException.class, () -> {
             gameService.addSymbolToBoard(PlayerSymbol.X, new Position(13, 1));
         });
     }
 
     @Test
     public void invalidYCoordinateShouldFail() {
-        assertThrows(InvalidCoordinateException.class, () -> {
+        assertThrows(InvalidPositionException.class, () -> {
             gameService.addSymbolToBoard(PlayerSymbol.X, new Position(0, 9));
         });
     }

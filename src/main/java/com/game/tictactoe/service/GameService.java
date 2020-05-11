@@ -4,7 +4,7 @@ import com.game.tictactoe.domain.Board;
 import com.game.tictactoe.domain.GameState;
 import com.game.tictactoe.domain.PlayerSymbol;
 import com.game.tictactoe.domain.Position;
-import com.game.tictactoe.service.exception.InvalidCoordinateException;
+import com.game.tictactoe.service.exception.InvalidPositionException;
 import com.game.tictactoe.service.exception.PositionIsAlreadyOccupiedException;
 import lombok.Getter;
 import lombok.Setter;
@@ -32,7 +32,7 @@ public class GameService {
 
     void addSymbolToBoard(PlayerSymbol symbol, Position position) {
         if (isPositionInvalid(position)) {
-            throw new InvalidCoordinateException();
+            throw new InvalidPositionException();
         }
         if (isFieldOccupied(position)) {
             throw new PositionIsAlreadyOccupiedException();
