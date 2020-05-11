@@ -26,3 +26,14 @@ JDK 8 or higher installed with JAVA_HOME configured appropriately
 ```
 http://localhost:8080/tictactoe/index.html
 ```
+
+### Running unit and integration tests
+
+1. Open a new terminal window.
+2. Navigate to the project's folder.
+3. Execute the following command:
+
+```
+./mvnw test
+```
+(On Windows, you need to use the mvnw.cmd)
